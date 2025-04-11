@@ -99,6 +99,16 @@ extern "C"
 #endif
 #endif
 
+#ifdef LFS_ASSERT
+#undef LFS_ASSERT
+#define LFS_ASSERT(test)    \
+    ((test)								\
+    ? (void) (0)						\
+    : lfs_assert_noreset())
+#endif
+
+void register_lfs_assert_callback(void (*fptr)(void));
+void lfs_assert_noreset(void);
 
 // Builtin functions, these may be replaced by more efficient
 // toolchain-specific implementations. LFS_NO_INTRINSICS falls back to a more
