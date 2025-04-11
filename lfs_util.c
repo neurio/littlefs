@@ -7,6 +7,14 @@
  */
 #include "lfs_util.h"
 
+void (*lfs_assert_callback)(void);
+void register_lfs_assert_callback(void (*fptr)(void)) {
+    lfs_assert_callback = fptr;
+}
+void lfs_assert_noreset(void) {
+    if(lfs_assert_callback != 0) (*lfs_assert_callback)();
+}
+
 // Only compile if user does not provide custom config
 #ifndef LFS_CONFIG
 
